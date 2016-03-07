@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.IO.Compression;
 using System.Windows.Forms;
 using HookReviewUi.Properties;
 using ReviewHook;
@@ -42,6 +45,23 @@ namespace HookReviewUi
 
                 TortoiseSvnPatchGenerator patchGenerator = new TortoiseSvnPatchGenerator();
                 string patchPath = patchGenerator.GetPatchFromWorkingCopy(workingCopyPath);
+
+                List<string> pathsToBinaryFilesInPatch = patchGenerator.PatchToBinaryFiles(patchPath);
+
+                File.Delete(Path.Combine(workingCopyPath, "binaryFiles.zip"));
+
+                if (pathsToBinaryFilesInPatch.Count > 0)
+                {
+                    using (
+                        ZipArchive zipFile = ZipFile.Open(Path.Combine(workingCopyPath, "binaryFiles.zip"), ZipArchiveMode.Create))
+                    {
+                        foreach (string pathToBinaryFilesInPatch in pathsToBinaryFilesInPatch)
+                        {
+                            zipFile.CreateEntryFromFile(Path.Combine(workingCopyPath, pathToBinaryFilesInPatch),
+                                pathToBinaryFilesInPatch);
+                        }
+                    }
+                }
 
                 Application.Run(new ReviewCreationDlg(workingCopyPath, commitMessage, patchPath));
             }

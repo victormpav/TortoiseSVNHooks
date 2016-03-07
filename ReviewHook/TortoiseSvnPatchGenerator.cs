@@ -1,4 +1,8 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace ReviewHook
 {
@@ -23,6 +27,34 @@ namespace ReviewHook
             process.WaitForExit();
 
             return outputPath;
+        }
+
+        public List<String> PatchToBinaryFiles(string patchPath)
+        {
+            List<String> binaryFilesPaths = new List<string>();
+
+            try
+            {
+                string patchContent = System.IO.File.ReadAllText(patchPath);
+                string[] changes = patchContent.Split(new string[] {"Index:"}, StringSplitOptions.None); //Regex.Split("{Index:}+", patchContent);
+                
+
+                foreach (var change in changes)
+                {
+                    if (change.Contains("Cannot display: file marked as a binary type."))
+                    {
+                        binaryFilesPaths.Add(change.Split('\r').First().Trim());             
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                
+                
+            }
+
+            return binaryFilesPaths.Distinct().ToList();
+
         }
     }
 }
