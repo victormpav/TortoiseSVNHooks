@@ -114,4 +114,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Program_Main_Would_you_like_to_create_a_review_" xml:space="preserve">
+    <value>Would you like to create a review?</value>
+  </data>
+  <data name="Program_Main_Create_Review" xml:space="preserve">
+    <value>Create Review</value>
+  </data>
 </root>

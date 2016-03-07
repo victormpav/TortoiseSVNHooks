@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using HookReviewUi.Properties;
 using ReviewHook;
 
 namespace HookReviewUi
@@ -18,13 +16,13 @@ namespace HookReviewUi
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            DialogResult result = MessageBox.Show("Create Review", "Would you like to create a review?",MessageBoxButtons.YesNo);
+            DialogResult result = MessageBox.Show(Resources.Program_Main_Create_Review, Resources.Program_Main_Would_you_like_to_create_a_review_, MessageBoxButtons.YesNo);
 
             if (result == DialogResult.Yes)
             {
                 if (args.Length < 3)
                 {
-                    Console.Error.WriteLine(String.Format("Wrong parameter list, expected 3 and receive {0}", args.Length));
+                    Console.Error.WriteLine("Wrong parameter list, expected 3 and receive {0}", args.Length);
                     return 1;
                 }
                 
@@ -44,10 +42,6 @@ namespace HookReviewUi
 
                 TortoiseSvnPatchGenerator patchGenerator = new TortoiseSvnPatchGenerator();
                 string patchPath = patchGenerator.GetPatchFromWorkingCopy(workingCopyPath);
-
-              //  commitMessage = string.Format("{0} ***** {1} ***** {2}", args[0], args[1], args[2]);
-
-
 
                 Application.Run(new ReviewCreationDlg(workingCopyPath, commitMessage, patchPath));
             }

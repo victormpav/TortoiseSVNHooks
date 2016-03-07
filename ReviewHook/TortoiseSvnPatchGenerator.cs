@@ -4,6 +4,11 @@ namespace ReviewHook
 {
     public class TortoiseSvnPatchGenerator
     {
+        /// <summary>
+        /// Generate patch from working copy directory given as parameter
+        /// </summary>
+        /// <param name="workingCopyPath">Working copy path</param>
+        /// <returns>Path to patch file generated</returns>
         public string GetPatchFromWorkingCopy(string workingCopyPath)
         {
             string strCmdText;
