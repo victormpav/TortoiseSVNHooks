@@ -41,10 +41,13 @@
             // 
             // reviewMessageTextBox
             // 
+            this.reviewMessageTextBox.AcceptsReturn = true;
+            this.reviewMessageTextBox.AcceptsTab = true;
             this.reviewMessageTextBox.Location = new System.Drawing.Point(3, 19);
             this.reviewMessageTextBox.MaxLength = 0;
             this.reviewMessageTextBox.Multiline = true;
             this.reviewMessageTextBox.Name = "reviewMessageTextBox";
+            this.reviewMessageTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.reviewMessageTextBox.Size = new System.Drawing.Size(549, 197);
             this.reviewMessageTextBox.TabIndex = 0;
             // 
