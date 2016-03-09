@@ -29,13 +29,13 @@ namespace HookReviewUi
                     return 1;
                 }
                 
-                string commitMessage;
+                string commitMessageFilePath;
                 string workingCopyPath;
 
                 try
                 {
                     workingCopyPath = args[2];
-                    commitMessage = System.IO.File.ReadAllText(args[1]);
+                    commitMessageFilePath = args[1];
                 }
                 catch (Exception)
                 {
@@ -66,7 +66,7 @@ namespace HookReviewUi
                     }
                 }
 
-                Application.Run(new ReviewCreationDlg(workingCopyPath, commitMessage, patchPath));
+                Application.Run(new ReviewCreationDlg(workingCopyPath, commitMessageFilePath, patchPath));
             }
 
             return 0;

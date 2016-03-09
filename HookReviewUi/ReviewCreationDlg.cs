@@ -9,16 +9,21 @@ namespace HookReviewUi
     {
         private string m_reviewPatchFilePath;
         private string m_workingCopyPath;
+        private string m_commitMessageFilePath;
 
-        public ReviewCreationDlg(string workingCopyPath, string commitMessage, string reviewPatchFile)
+        public ReviewCreationDlg(string workingCopyPath, string commitMessageFilePath, string reviewPatchFile)
         {
             m_workingCopyPath = workingCopyPath;
             m_reviewPatchFilePath = reviewPatchFile;
+            m_commitMessageFilePath = commitMessageFilePath;
+
             InitializeComponent();
         }
 
         private void sendReviewButton_Click(object sender, EventArgs e)
         {
+            File.WriteAllText(m_commitMessageFilePath, reviewMessageTextBox.Text);
+
             try
             {
                 Outlook.Application oApp = new Outlook.Application();
@@ -54,6 +59,8 @@ namespace HookReviewUi
                 oRecips = null;
                 oMsg = null;
                 oApp = null;
+
+                
             }
             catch (Exception ex)
             {
