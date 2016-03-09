@@ -57,8 +57,11 @@ namespace HookReviewUi
                     {
                         foreach (string pathToBinaryFilesInPatch in pathsToBinaryFilesInPatch)
                         {
-                            zipFile.CreateEntryFromFile(Path.Combine(workingCopyPath, pathToBinaryFilesInPatch),
-                                pathToBinaryFilesInPatch);
+                            if (File.Exists(pathToBinaryFilesInPatch))
+                            {
+                                zipFile.CreateEntryFromFile(Path.Combine(workingCopyPath, pathToBinaryFilesInPatch),
+                                    pathToBinaryFilesInPatch);
+                            }
                         }
                     }
                 }
