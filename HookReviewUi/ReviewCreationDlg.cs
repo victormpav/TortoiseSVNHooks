@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Windows.Forms;
+using ReviewHook;
 using Outlook = Microsoft.Office.Interop.Outlook;
 
 namespace HookReviewUi
@@ -18,6 +19,9 @@ namespace HookReviewUi
             m_commitMessageFilePath = commitMessageFilePath;
 
             InitializeComponent();
+
+            SvnCommands svnCommands = new SvnCommands();
+            reviewMessageTextBox.Text = svnCommands.GetCommitMessageTemplate(m_workingCopyPath);
         }
 
         private void sendReviewButton_Click(object sender, EventArgs e)
