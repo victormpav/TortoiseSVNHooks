@@ -22,6 +22,7 @@ namespace HookReviewUi
 
             SvnCommands svnCommands = new SvnCommands();
             reviewMessageTextBox.Text = svnCommands.GetCommitMessageTemplate(m_workingCopyPath);
+            reviewerEmailTextBox.Text = Settings.Default.reviewerEmail;
         }
 
         private void sendReviewButton_Click(object sender, EventArgs e)
@@ -70,6 +71,8 @@ namespace HookReviewUi
             {
             }
 
+            Settings.Default.reviewerEmail = reviewerEmailTextBox.Text;
+            Settings.Default.Save();
             Close();
         }
     }
