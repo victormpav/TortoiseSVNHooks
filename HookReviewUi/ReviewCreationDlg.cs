@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
 using ReviewHook;
@@ -73,6 +74,19 @@ namespace HookReviewUi
 
             Settings.Default.reviewerEmail = reviewerEmailTextBox.Text;
             Settings.Default.Save();
+
+            string strCmdText;
+            strCmdText = @"post --branch ""{0}"" --target-groups ""{1}"" --markdown --description- file ""{2}""";
+            string branch = "trunk";
+            string group = "ips";
+            
+            Process process = new Process();
+            process.StartInfo.FileName = "rbt";
+            process.StartInfo.WorkingDirectory = m_workingCopyPath;
+            process.StartInfo.Arguments = string.Format(strCmdText, branch, group, m_commitMessageFilePath);
+            process.Start();
+            process.WaitForExit();
+            
             Close();
         }
     }
