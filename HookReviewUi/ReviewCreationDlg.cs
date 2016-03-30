@@ -22,13 +22,13 @@ namespace HookReviewUi
             InitializeComponent();
 
             SvnCommands svnCommands = new SvnCommands();
-            reviewMessageTextBox.Text = svnCommands.GetCommitMessageTemplate(m_workingCopyPath);
-            reviewerEmailTextBox.Text = Settings.Default.reviewerEmail;
+            reviewDescriptionTextBox.Text = svnCommands.GetCommitMessageTemplate(m_workingCopyPath);
+            GroupTextBox.Text = Settings.Default.reviewerEmail;
         }
 
         private void sendReviewButton_Click(object sender, EventArgs e)
         {
-            File.WriteAllText(m_commitMessageFilePath, reviewMessageTextBox.Text);
+            File.WriteAllText(m_commitMessageFilePath, reviewDescriptionTextBox.Text);
 
             try
             {
@@ -36,7 +36,7 @@ namespace HookReviewUi
                 
                 Outlook.MailItem oMsg = (Outlook.MailItem)oApp.CreateItem(Outlook.OlItemType.olMailItem);
 
-                oMsg.Body = reviewMessageTextBox.Text;
+                oMsg.Body = reviewDescriptionTextBox.Text;
 
                 String sDisplayName = "Patch to review";
                 int iPosition = (int)oMsg.Body.Length + 1;
@@ -56,7 +56,7 @@ namespace HookReviewUi
                 oMsg.Subject = "[CodeReview] - ";
 
                 Outlook.Recipients oRecips = (Outlook.Recipients)oMsg.Recipients;
-                Outlook.Recipient oRecip = (Outlook.Recipient)oRecips.Add(reviewerEmailTextBox.Text);
+                Outlook.Recipient oRecip = (Outlook.Recipient)oRecips.Add(GroupTextBox.Text);
                 oRecip.Resolve();
                 
                 oMsg.Send();
@@ -72,7 +72,7 @@ namespace HookReviewUi
             {
             }
 
-            Settings.Default.reviewerEmail = reviewerEmailTextBox.Text;
+            Settings.Default.reviewerEmail = GroupTextBox.Text;
             Settings.Default.Save();
 
             string strCmdText;
